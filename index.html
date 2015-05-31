@@ -7,8 +7,13 @@
 </head>
 <body>
     <div id="map"></div>
+    <div data-bind="foreach: categories">
+        <label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label>
+    </div>
+
 <script src="bower_components/knockout/dist/knockout.debug.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="js/model.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
