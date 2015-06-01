@@ -12,6 +12,7 @@
     function LocationViewModel(location, categoryViewModel) {
         var self = this;
         this.model = location;
+        this.name = location.name;
         this.visible = ko.observable(true);
         if (location.coords) {
             this.marker = new google.maps.Marker({
@@ -32,22 +33,32 @@
 
     function ViewModel(model) {
         var self = this;
-        this.categories =  model.categories.map(function (category) {
+
+        self.findCategory = function (name) {
+            for (var i = 0; i < self.categories.length; i++) {
+                if (self.categories[i].name === name) {
+                    return self.categories[i];
+                }
+            }
+            throw new Error("No such category: " + name);
+        };
+
+        self.categories = model.categories.map(function (category) {
             return new CategoryViewModel(category);
         });
-        this.locations = model.locations.map(function (location) {
+        self.locations = model.locations.map(function (location) {
             return new LocationViewModel(location, self.findCategory(location.category));
         });
-    }
+        self.selectedLocation = {
+            name: ko.observable(),
+            category: ko.observable()
+        };
 
-    ViewModel.prototype.findCategory = function(name) {
-        for (var i = 0; i < this.categories.length; i++) {
-            if (this.categories[i].name === name) {
-                return this.categories[i];
-            }
-        }
-        throw new Error("No such category: " + name);
-    };
+
+        self.select = function(location) {
+            self.selectedLocation.name(location.name).category(location.category);
+        };
+    }
 
     var viewModel = new ViewModel(model);
     ko.applyBindings(viewModel);

@@ -7,10 +7,21 @@
 </head>
 <body>
     <div id="map"></div>
-    <div data-bind="foreach: categories">
-        <label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label>
-    </div>
-
+    <section class="category-filter">
+        <header>Show:</header>
+        <div data-bind="foreach: categories">
+            <label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label>
+        </div>
+    </section>
+    <section class="location-list">
+        <header>Locations</header>
+        <ul data-bind="foreach: locations">
+            <li data-bind="click: $root.select"><span data-bind="text: model.name"></span></li>
+        </ul>
+    </section>
+    <section class="selected-location" data-bind="if: selectedLocation.name">
+        <header data-bind="text: selectedLocation.name"></header>
+    </section>
 <script src="bower_components/knockout/dist/knockout.debug.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="js/model.js"></script>
