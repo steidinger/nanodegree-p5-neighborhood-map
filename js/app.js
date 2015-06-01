@@ -22,6 +22,7 @@
             this.marker.setMap(map);
         }
         categoryViewModel.visible.subscribe(function (newValue) {
+            self.visible(newValue);
             if (newValue) {
                 self.marker.setMap(map);
             }

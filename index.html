@@ -16,7 +16,7 @@
     <section class="location-list">
         <header>Locations</header>
         <ul data-bind="foreach: locations">
-            <li data-bind="click: $root.select"><span data-bind="text: model.name"></span></li>
+            <li data-bind="click: $root.select, visible: visible"><span data-bind="text: model.name"></span></li>
         </ul>
     </section>
     <section class="selected-location" data-bind="if: selectedLocation.name">
