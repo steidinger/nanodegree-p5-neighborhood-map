@@ -1,5 +1,3 @@
-- add search field
-- filter list and markers by search term
 - load text for selected location from wikipedia
 - use different map marker icons for each category
 - implement layout for phone, tablet and desktop
