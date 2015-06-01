@@ -1,4 +1,6 @@
 (function () {
+    'use strict';
+
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 46.9479222, lng: 7.4446084},
         zoom: 14
@@ -15,13 +17,17 @@
         this.name = location.name;
         this.normalizedName = location.name.toLowerCase();
         this.matchesSearch = ko.observable(true);
+        this.selected = ko.observable(false);
+        this.selectedIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png';
+        this.normalIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png';
         this.visible = ko.computed(function () {
             return self.matchesSearch() && categoryViewModel.visible();
         });
         if (location.coords) {
             this.marker = new google.maps.Marker({
                 position: location.coords,
-                title: location.name
+                title: location.name,
+                icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'
             });
             this.marker.setMap(map);
         }
@@ -33,6 +39,10 @@
                 self.marker.setMap(null);
             }
         });
+        self.selected.subscribe(function (newValue) {
+            var icon = newValue ? self.selectedIcon : self.normalIcon;
+            self.marker.setIcon(icon);
+        })
     }
 
     function ViewModel(model) {
@@ -56,6 +66,7 @@
         });
         
         self.selectedLocation = {
+            location: null,
             name: ko.observable(),
             category: ko.observable()
         };
@@ -63,7 +74,12 @@
         self.searchTerm = ko.observable('');
         
         self.select = function(location) {
+            if (self.selectedLocation.location) {
+                self.selectedLocation.location.selected(false);
+            }
             self.selectedLocation.name(location.name).category(location.category);
+            self.selectedLocation.location = location;
+            location.selected(true);
         };
 
         self.searchTerm.subscribe(function (term) {
@@ -75,5 +91,10 @@
     }
 
     var viewModel = new ViewModel(model);
+    viewModel.locations.forEach(function (location) {
+        google.maps.event.addListener(location.marker, 'click', function () {
+            viewModel.select(location);
+        })
+    });
     ko.applyBindings(viewModel);
 })();
