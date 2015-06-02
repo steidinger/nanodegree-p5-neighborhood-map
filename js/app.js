@@ -16,10 +16,11 @@
         this.model = location;
         this.name = location.name;
         this.normalizedName = location.name.toLowerCase();
+        this.description = ko.observable();
         this.matchesSearch = ko.observable(true);
         this.selected = ko.observable(false);
-        this.selectedIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png';
-        this.normalIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png';
+        this.selectedIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png';
+        this.normalIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/grey.png';
         this.visible = ko.computed(function () {
             return self.matchesSearch() && categoryViewModel.visible();
         });
@@ -27,7 +28,7 @@
             this.marker = new google.maps.Marker({
                 position: location.coords,
                 title: location.name,
-                icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'
+                icon: self.normalIcon
             });
             this.marker.setMap(map);
         }
@@ -68,17 +69,46 @@
         self.selectedLocation = {
             location: null,
             name: ko.observable(),
-            category: ko.observable()
+            category: ko.observable(),
+            description: ko.observable()
         };
 
         self.searchTerm = ko.observable('');
-        
+
+        self.loadDescription = function (location) {
+            var self = this;
+            if (location.model.wikipediaPageId && !location.description()) {
+                location.description("Loading Wikipedia article");
+                $.ajax({
+                    method: 'GET',
+                    cache: true,
+                    url: 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&pageids=' + location.model.wikipediaPageId + '&callback=?',
+                    dataType: 'jsonp'
+                })
+                    .done(function (json) {
+                        try {
+                            var html = json.query.pages[location.model.wikipediaPageId].extract;
+                            location.description(html);
+                            if (self.selectedLocation && self.selectedLocation.location && self.selectedLocation.location.model.wikipediaPageId === location.model.wikipediaPageId) {
+                                self.selectedLocation.description(html);
+                            }
+                        } catch (e) {
+                            location.description('Could not retrieve Wikipedia article')
+                        }
+                    })
+                    .fail(function () {
+                        location.description('Could not retrieve Wikipedia article');
+                    });
+            }
+        };
+
         self.select = function(location) {
             if (self.selectedLocation.location) {
                 self.selectedLocation.location.selected(false);
             }
-            self.selectedLocation.name(location.name).category(location.category);
+            self.selectedLocation.name(location.name).category(location.category).description(location.description());
             self.selectedLocation.location = location;
+            self.loadDescription(location);
             location.selected(true);
         };
 

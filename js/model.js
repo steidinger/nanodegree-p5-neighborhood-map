@@ -1,4 +1,4 @@
-function Location(name, category, coords) {
+function Location(name, category, coords, wikipediaPageId) {
     this.name = name;
     /*
     most locations only belong to one category, but some use more than one
@@ -7,6 +7,7 @@ function Location(name, category, coords) {
     */
     this.category = category;
     this.coords = coords;
+    this.wikipediaPageId = wikipediaPageId;
 }
 
 Location.prototype.hasCategory = function(category) {
@@ -28,7 +29,7 @@ var model = {
         new Location('Bärengraben',         'Park',         {lat: 46.948153, lng: 7.459974}),
         new Location('Münster',             'Building',     {lat: 46.947069, lng: 7.451220}),
         new Location('Nydeggkirche',        'Building',     {lat: 46.948841, lng: 7.457228}),
-        new Location('Zytglogge',           'Building',     {lat: 46.947955, lng: 7.447668}),
+        new Location('Zytglogge',           'Building',     {lat: 46.947955, lng: 7.447668}, '1061330'),
         new Location('Bundeshaus',          'Building',     {lat: 46.946424, lng: 7.444396})
     ],
     categories: []
