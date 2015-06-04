@@ -100,6 +100,9 @@
                         location.description('Could not retrieve Wikipedia article');
                     });
             }
+            else {
+                self.selectedLocation.description(location.description() || 'No description available');
+            }
         };
 
         self.select = function(location) {

@@ -2,30 +2,36 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet'>
     <link rel="stylesheet" href="styles/styles.css">
     <title></title>
 </head>
 <body>
+<main>
     <div id="map"></div>
     <section class="category-filter">
         <header>Show:</header>
-        <div data-bind="foreach: categories">
-            <label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label>
-        </div>
+        <ul data-bind="foreach: categories">
+            <li><label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label></li>
+        </ul>
     </section>
     <section class="search">
-        <label for="search">Search:</label> <input id="search" type="search" data-bind="textInput: searchTerm">
+        <label for="search">Search:</label> <input id="search" type="search" placeholder="Search location" data-bind="textInput: searchTerm">
     </section>
     <section class="location-list">
         <header>Locations</header>
         <ul data-bind="foreach: locations">
-            <li data-bind="click: $root.select, visible: visible"><span data-bind="text: model.name"></span></li>
+            <li data-bind="click: $root.select, visible: visible, css: {selected: selected}">
+                <span data-bind="text: model.name"></span>
+            </li>
         </ul>
     </section>
     <section class="selected-location" data-bind="if: selectedLocation.name">
         <header data-bind="text: selectedLocation.name"></header>
         <article data-bind="html: selectedLocation.description"></article>
     </section>
+</main>
 <script src="bower_components/knockout/dist/knockout.debug.js"></script>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>

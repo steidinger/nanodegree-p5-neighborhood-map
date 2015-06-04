@@ -1,4 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Layout */
+ul, li {
+    list-style: none;
+}
+
 #map {
-    width: 100%;
+    width: 66%;
     height: 600px;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category-filter {
+    order: 1;
+    flex-grow: 9;
+    width: 66%;
+}
+
+.category-filter header, .location-list header, .search label {
+    display: none;
+}
+
+.category-filter ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.search {
+    order: 2;
+    flex-grow: 3;
+    width: 33%;
+}
+
+.search input {
+    width: 100%;
+}
+
+#map {
+    order: 3;
+    flex-grow: 9;
+}
+
+.location-list {
+    order: 4;
+    flex-grow: 3;
+    width: 33%;
+}
+
+.selected-location {
+    order: 5;
+    flex-grow: 12;
+    width: 100%;
+}
+
+/* Margins & Paddings */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.category-filter, .search {
+    padding: 0.2rem 0.5rem;
+}
+
+.location-list {
+    padding: 0.5rem;
+}
+
+.location-list li {
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.selected-location {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Colors */
+
+.category-filter, .search {
+    color: white;
+    background: #0D47A1;
+}
+
+.location-list {
+    color: #0D47A1;
+    background: #E3F2FD;
+}
+
+.location-list li {
+    background: white;
+}
+
+.location-list .selected {
+    color: white;
+    background: #2196F3;
+}
+.selected-location header {
+    color: #0D47A1;
+}
+/* Misc */
+
+.location-list li {
+    cursor: pointer;
+}
+
+.category-filter label {
+    white-space: nowrap;
+}
+
+.selected-location header {
+    font-size: 200%;
+    font-weight: 700;
 }

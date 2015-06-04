@@ -26,7 +26,7 @@ var model = {
         new Location('Kleine Schanze',      'Park',         {lat: 46.945582, lng: 7.440319}),
         new Location('Botanischer Garten',  'Park',         {lat: 46.952965, lng: 7.444632}),
         new Location('Rosengarten',         'Park',         {lat: 46.951390, lng: 7.460897}),
-        new Location('Bärengraben',         'Park',         {lat: 46.948153, lng: 7.459974}),
+        new Location('Bärengraben',         'Park',         {lat: 46.948153, lng: 7.459974}, '8962235'),
         new Location('Münster',             'Building',     {lat: 46.947069, lng: 7.451220}),
         new Location('Nydeggkirche',        'Building',     {lat: 46.948841, lng: 7.457228}),
         new Location('Zytglogge',           'Building',     {lat: 46.947955, lng: 7.447668}, '1061330'),
