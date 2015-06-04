@@ -1,2 +1,2 @@
-- load text for selected location from wikipedia (need page id)
 - use different map marker icons for each category
+- when location is selected, make sure it is visible in the map

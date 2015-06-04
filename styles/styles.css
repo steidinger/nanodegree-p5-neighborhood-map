@@ -3,6 +3,7 @@
 }
 
 /* Layout */
+
 ul,
 li {
     list-style: none;
@@ -36,6 +37,10 @@ main {
     justify-content: space-around;
 }
 
+.category-filter li {
+    flex-grow: 1;
+}
+
 .search {
     order: 2;
     flex-grow: 3;
@@ -63,6 +68,11 @@ main {
     width: 100%;
 }
 
+/*
+ * Since the default layout works for larger tablet (e.g. iPad) and desktop,
+ *  I decided to only use one breakpoint for smaller screens
+ */
+
 @media screen and (max-width: 760px) {
     #map,
     .category-filter,
@@ -72,11 +82,11 @@ main {
         width: 100%;
     }
 
-    .location-list {
+    .category-filter li {
+        width: 33%;
     }
-
     .location-list ul {
-        height: 17rem;
+        height: 16.3rem;
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
@@ -155,11 +165,14 @@ li {
 .selected-location header {
     color: #0D47A1;
 }
+
 /* Misc */
 
 body {
     font-family: 'Roboto', sans-serif;
     font-size:  12pt;
+    /* set overflow-y to prevent screen from "pumping" when the selected location's description is added */
+    overflow-y: scroll;
 }
 
 .location-list li {
