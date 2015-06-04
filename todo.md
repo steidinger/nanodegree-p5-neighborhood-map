@@ -1,3 +1,2 @@
-- load text for selected location from wikipedia
+- load text for selected location from wikipedia (need page id)
 - use different map marker icons for each category
-- implement layout for phone, tablet and desktop
