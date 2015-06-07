@@ -1,2 +1,3 @@
 - use different map marker icons for each category
-- when location is selected, make sure it is visible in the map
+- when location is selected, make sure it is visible in the map: map.getBounds, map.panTo
+- prefix flex-box CSS
