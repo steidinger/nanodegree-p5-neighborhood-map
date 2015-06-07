@@ -1,6 +1,27 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
+        jshint: {
+            options: {
+                curly: true,
+                undef: true,
+                browser: true
+            },
+            uses_defaults: ['js/model.js'],
+            with_overrides: {
+                options: {
+                    globals: {
+                        '$': false,
+                        ko: false,
+                        google: false,
+                        model: false
+                    }
+                },
+                files: {
+                    src: ['js/app.js']
+                }
+            }
+        },
         cssmin: {
             dist: {
                 files: [{
@@ -12,6 +33,10 @@ module.exports = function(grunt) {
         },
         uglify: {
             dist: {
+                options: {
+                    sourceMap: true,
+                    sourceMapIncludeSources: true
+                },
                 files: {
                     'dist/js/app.min.js': ['js/model.js', 'js/app.js']
                 }
@@ -59,14 +84,14 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-processhtml');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.registerTask('min', ['cssmin', 'processhtml', 'htmlmin', 'uglify']);
-    grunt.registerTask('dev', ['connect:dev']);
-    grunt.registerTask('prod', ['min', 'copy:dist', 'connect:prod']);
+    grunt.registerTask('dev', ['jshint', 'connect:dev']);
+    grunt.registerTask('prod', ['jshint', 'min', 'connect:prod']);
     grunt.registerTask('default', ['prod']);
 
 };
