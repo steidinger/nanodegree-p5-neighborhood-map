@@ -8,10 +8,6 @@
         this.wikipediaPageId = wikipediaPageId;
     }
 
-    Location.prototype.hasCategory = function(category) {
-        return this.category === category;
-    };
-
     var model = {
         locations: [
             new Location('Stade de Suisse',     'Sports',       {lat: 46.963092, lng: 7.465038}, '2546696'),
