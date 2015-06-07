@@ -26,9 +26,10 @@
             return self.matchesSearch() && categoryViewModel.visible();
         });
         if (location.coords) {
+            self.coords = new google.maps.LatLng(location.coords.lat, location.coords.lng);
             self.marker = new google.maps.Marker({
-                position: location.coords,
-                title: location.name,
+                position: self.coords,
+                title: self.name,
                 icon: self.normalIcon
             });
             self.marker.setMap(map);
@@ -44,6 +45,9 @@
         self.selected.subscribe(function (newValue) {
             var icon = newValue ? self.selectedIcon : self.normalIcon;
             self.marker.setIcon(icon);
+            if (!map.getBounds().contains(self.coords)) {
+                map.setCenter(self.coords);
+            }
         });
     }
 
