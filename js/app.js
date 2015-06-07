@@ -8,7 +8,7 @@
 
     function CategoryViewModel(name) {
         this.name = name;
-        this.visible = ko.observable(true)
+        this.visible = ko.observable(true);
     }
 
     function LocationViewModel(location, categoryViewModel) {
@@ -43,7 +43,7 @@
         self.selected.subscribe(function (newValue) {
             var icon = newValue ? self.selectedIcon : self.normalIcon;
             self.marker.setIcon(icon);
-        })
+        });
     }
 
     function ViewModel(model) {
@@ -93,7 +93,7 @@
                                 self.selectedLocation.description(html);
                             }
                         } catch (e) {
-                            location.description('Could not retrieve Wikipedia article')
+                            location.description('Could not retrieve Wikipedia article');
                         }
                     })
                     .fail(function () {
@@ -127,7 +127,7 @@
     viewModel.locations.forEach(function (location) {
         google.maps.event.addListener(location.marker, 'click', function () {
             viewModel.select(location);
-        })
+        });
     });
     ko.applyBindings(viewModel);
 })();
