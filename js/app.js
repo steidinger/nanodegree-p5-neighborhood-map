@@ -7,30 +7,31 @@
     });
 
     function CategoryViewModel(name) {
-        this.name = name;
-        this.visible = ko.observable(true);
+        var self = this;
+        self.name = name;
+        self.visible = ko.observable(true);
     }
 
     function LocationViewModel(location, categoryViewModel) {
         var self = this;
-        this.model = location;
-        this.name = location.name;
-        this.normalizedName = location.name.toLowerCase();
-        this.description = ko.observable();
-        this.matchesSearch = ko.observable(true);
-        this.selected = ko.observable(false);
-        this.selectedIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png';
-        this.normalIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/grey.png';
-        this.visible = ko.computed(function () {
+        self.model = location;
+        self.name = location.name;
+        self.normalizedName = location.name.toLowerCase();
+        self.description = ko.observable();
+        self.matchesSearch = ko.observable(true);
+        self.selected = ko.observable(false);
+        self.selectedIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png';
+        self.normalIcon = 'https://maps.gstatic.com/mapfiles/ms2/micons/grey.png';
+        self.visible = ko.computed(function () {
             return self.matchesSearch() && categoryViewModel.visible();
         });
         if (location.coords) {
-            this.marker = new google.maps.Marker({
+            self.marker = new google.maps.Marker({
                 position: location.coords,
                 title: location.name,
                 icon: self.normalIcon
             });
-            this.marker.setMap(map);
+            self.marker.setMap(map);
         }
         self.visible.subscribe(function (newValue) {
             if (newValue) {
