@@ -232,7 +232,7 @@ li {
 /* Misc */
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size:  16px;
     /* set overflow-y to prevent screen from "pumping" when the selected location's description is added */
     overflow-y: scroll;

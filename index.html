@@ -13,11 +13,17 @@
     <section class="category-filter">
         <header>Show:</header>
         <ul data-bind="foreach: categories">
-            <li><label><input type="checkbox" data-bind="checked: visible"> <span data-bind="text: name"></span></label></li>
+            <li>
+                <label>
+                    <input type="checkbox" data-bind="checked: visible">
+                    <span data-bind="text: name"></span>
+                </label>
+            </li>
         </ul>
     </section>
     <section class="search">
-        <label for="search">Search:</label> <input id="search" type="search" placeholder="Search for location" data-bind="textInput: searchTerm">
+        <label for="search">Search:</label>
+        <input id="search" type="search" placeholder="Search for location" data-bind="textInput: searchTerm">
     </section>
     <section class="location-list">
         <header>Locations</header>
@@ -33,6 +39,11 @@
         <article data-bind="html: selectedLocation.description"></article>
     </section>
 </main>
+<!--
+I replaced the Bower components with the CDN URLs directly in the source since the project already requires an
+Internet connection for the Google Maps API. Otherwise I would have replaced the Bower components with these URLs
+as part of the Grunt build to be able to work offline.
+-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
