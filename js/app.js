@@ -78,12 +78,15 @@
         self.loadDescription = function (location) {
             var self = this;
             if (location.model.wikipediaPageId && !location.description()) {
-                location.description("Loading Wikipedia article");
+                if (self.selectedLocation && self.selectedLocation.location && self.selectedLocation.location.model.wikipediaPageId === location.model.wikipediaPageId) {
+                    self.selectedLocation.description('Loading Wikipedia article');
+                }
                 $.ajax({
                     method: 'GET',
                     cache: true,
                     url: 'http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&pageids=' + location.model.wikipediaPageId + '&callback=?',
-                    dataType: 'jsonp'
+                    dataType: 'jsonp',
+                    timeout: 10 * 1000 // 10s
                 })
                     .done(function (json) {
                         try {
@@ -93,11 +96,15 @@
                                 self.selectedLocation.description(html);
                             }
                         } catch (e) {
-                            location.description('Could not retrieve Wikipedia article');
+                            if (self.selectedLocation && self.selectedLocation.location && self.selectedLocation.location.model.wikipediaPageId === location.model.wikipediaPageId) {
+                                self.selectedLocation.description('Could not retrieve Wikipedia article');
+                            }
                         }
                     })
                     .fail(function () {
-                        location.description('Could not retrieve Wikipedia article');
+                        if (self.selectedLocation && self.selectedLocation.location && self.selectedLocation.location.model.wikipediaPageId === location.model.wikipediaPageId) {
+                            self.selectedLocation.description('Could not retrieve Wikipedia article');
+                        }
                     });
             }
             else {
@@ -121,13 +128,25 @@
                 location.matchesSearch(location.normalizedName.indexOf(normalizedTerm) !== -1);
             });
         });
+
+        self.offline = ko.observable(!navigator.onLine);
     }
 
     var viewModel = new ViewModel(model);
+
     viewModel.locations.forEach(function (location) {
         google.maps.event.addListener(location.marker, 'click', function () {
             viewModel.select(location);
         });
     });
+
+    window.ononline = function () {
+        viewModel.offline(false);
+    };
+
+    window.onoffline = function () {
+        viewModel.offline(true);
+    };
+
     ko.applyBindings(viewModel);
 })();

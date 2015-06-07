@@ -79,16 +79,22 @@ main {
 }
 
 .location-list {
-    -webkit-order: 4;
-    order: 4;
+    -webkit-order: 5;
+    order: 5;
     -webkit-flex-grow: 3;
     flex-grow: 3;
     width: 16%;
 }
 
+.offline-warning {
+    -webkit-order: 4;
+    order: 4;
+    width: 100%;
+}
+
 .selected-location {
-    -webkit-order: 5;
-    order: 5;
+    -webkit-order: 6;
+    order: 6;
     -webkit-flex-grow: 12;
     flex-grow: 12;
     width: 100%;
@@ -203,6 +209,12 @@ li {
     color: #0d47a1;
 }
 
+.offline-warning {
+    color: red;
+    background: #e3f2fd;
+    border-top: 1px solid #0d47a1;
+    border-bottom: 1px solid #0d47a1;
+}
 /* Misc */
 
 body {
@@ -223,4 +235,8 @@ body {
 .selected-location header {
     font-size: 200%;
     font-weight: 700;
+}
+
+.offline-warning {
+    text-align: center;
 }
